@@ -1,0 +1,29 @@
+{
+  "name": "vote-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "bd": "nodemon bd.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luisrodriguesds/vote-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luisrodriguesds/vote-project/issues"
+  },
+  "homepage": "https://github.com/luisrodriguesds/vote-project#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-edge": "^2.0.2",
+    "express-session": "^1.17.1",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.4"
+  }
+}

@@ -1,0 +1,10 @@
+body{
+  overflow-x: hidden;
+}
+
+.vote-item{
+  border: 2px solid #1DA1F2;
+  padding: 10px;
+  color: #000;
+}
+

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plataforma de Votação</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <img src="logo.png" alt="some text" width=40 height=40>
+    <a class="navbar-brand" href="#">Plataforma de Votação</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="home.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="Vot-criadas.html">Votações criadas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="meus-votos.html">Meus votos</a>
+            </li>
+        </ul>
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Procure aqui" aria-label="Search" />
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Procurar</button>
+        </form>
+    </div>
+  </nav>
+
+  
+<ul class="nav nav-light" style="background-color: #e3f2fd;">
+            <li class="nav-item mt-1 mb-1">
+                <a class="nav-link active" href="enquetes-publicas.html">Enquetes Públicas</a>
+            </li>
+            <li class="nav-item mt-1 mb-1 col-9 center">
+                    <!-- Example split danger button -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary">Categorias</button>
+                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Separated link</a>
+                    </div>
+                </div>
+            </li>
+            
+            <li class="nav-item  mb-1 mt-1" >
+                <div class="btn-group btn-group-sm mt-1 mb-1" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary">+</button>
+                    <button type="button" class="btn btn-secondary">-</button>
+                </div>
+            </li>
+
+            <li class="nav-item col-1 mb-1 mt-1" >
+                <button type="button" class="btn btn-secondary">Modo Noturno</button>
+            </li>
+
+            <li class="nav-item  mb-1 mt-1" >
+                <button type="button" class="btn btn-primary">Logout</button>
+            </li>
+
+    
+</ul>
+
+  <div class="container">
+    <!-- Content here -->
+
+    <div class="row mt-4 mb-4">
+      <div class="col-8 mx-auto">
+        <h2>Qual a melhor stack?</h2>
+        <small>10/08/20 | 10 votos</small>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sit amet augue quis odio euismod mattis ut quis dui. Morbi eu purus nec ipsum venenatis tincidunt. Nunc pellentesque lacinia velit ut placerat. Nulla nec quam dui. Sed porta vitae elit eget porta. Maecenas a semper magna. Aenean quis ipsum ultricies, dictum ex vitae, consequat lorem. Donec at nisl at arcu mollis iaculis. Duis in quam congue, mollis nisi in, sodales nisl. Morbi vel facilisis arcu. Sed malesuada lorem vel nisi lobortis, a tincidunt ante feugiat. Suspendisse potenti. Proin sed nisi ante.</p>
+        
+        <div class="vote-options mt-4">
+          <a href="result.html" class="p-3 mb-3">
+            <div class="vote-item">
+              <h4 class="text-center">Nodejs + ReactJS + React Native</h4>
+            </div>
+          </a>
+
+          <a href="result.html" class="p-3 mb-3">
+            <div class="vote-item">
+              <h4 class="text-center">Ruby on Rails</h4>
+            </div>
+          </a>
+
+          <a href="result.html" class="p-3 mb-3">
+            <div class="vote-item">
+              <h4 class="text-center">Python Django</h4>
+            </div>
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+
+    <ul class="nav justify-content-end">
+      <li class="nav-item mr-1">
+        <img src="facebook.png" alt="some  text" width=20 height=20>
+      </li>
+      <li class="nav-item mr-1">
+        <img src="twitter.png" alt="some  text" width=20 height=20>
+      </li>
+      <li class="nav-item mr-1">
+        <img src="rede-social.png" alt="some  text" width=20 height=20>
+      </li>
+      <li class="nav-item mb-1">
+        <button type="button" class="btn btn-secondary btn-sm">Link Compartilhável</button>
+      </li>
+    </ul>
+
+  </div>
+  <div class="row pb-2 pt-2 bg-dark text-white footer">
+    <div class="col-12 text-center">
+      <footer>
+        &copy; 2020 - Plataforma de Votação - Developed by <a href="#">Grupo 01</a>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
