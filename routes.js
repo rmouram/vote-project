@@ -1,5 +1,5 @@
 const express = require('express')
-const { request, response } = require('express')
+const { request, response, query } = require('express')
 const session = require('express-session')
 const bodyParser = require('body-parser')
 const path = require('path')
@@ -18,6 +18,7 @@ routes.use(session({
 
 //Conexão com o banco (passar pro bd.js)
 const mysql = require('mysql');
+const { get } = require('http')
 const con = mysql.createConnection({
     host: 'localhost', // O host do banco. Ex: localhost
     user: 'root', // Um usuário do banco. Ex: user 
@@ -71,6 +72,15 @@ routes.post('/login', function(request, response) {
 	}
 });
 
+
+//Logout
+routes.get('/logout', function(request, response) {
+
+	request.session.loggedin = false
+		
+	response.end();
+})
+
 //Cadastro
 routes.post('/cadastro', function(request,response){
     var name = request.body.name
@@ -88,25 +98,64 @@ routes.post('/cadastro', function(request,response){
     
 })
 
-//MeusVotos
+//Enquetes Públicas - As votações salvas no banco
 routes.get('/index', function(request,response){
-    if (request.session.loggedin){
-
-       con.query('SELECT title FROM votes LIMIT 6',function(erro,results,fields){
-            response.render('index', {
-                name: results
+ 
+    con.query('SELECT title FROM votes LIMIT 6',function(erro,results,fields){
+            return results
             })
-        })
-
-    
-    } else {
-        return response.render('index', {
-            name: 'Lindinho'
-        })
-    }
     response.end()
-
 })
+
+//Meus Votos - Votos criados pelo usuário (apenas listagem dos titulos)
+routes.get('/meusvotos', function(request,response){
+    if(request.session.loggedin){
+        //Titulo das votações
+        con.query('SELECT title FROM votes WHERE userID=(SELECT id FROM users WHERE name=?)', request.session.name ,function(erro,results,fields){
+                console.log(results)
+                })
+        //Opções das votações
+        con.query('SELECT title FROM votes WHERE userID=(SELECT id FROM users WHERE name=?)', request.session.name ,function(erro,results,fields){
+            console.log(results)
+            })
+    }
+
+    response.end()
+})
+//Opções das votações
+routes.get('/meusvotos/:votetitle', function(request,response){
+    var vote_title = request.params.votetitle
+    if(request.session.loggedin){
+        con.query(`SELECT option_vote FROM vote_options WHERE voteID = (SELECT voteID FROM votes WHERE title='${vote_title}?')`,function(erro,results,fields){
+            console.log(results)
+            })
+    }
+
+    response.end()
+})
+
+//Resultado das votações
+routes.get('/meusvotos/:votetitle/results', function(request,response){
+    var vote_title = request.params.votetitle
+    if(request.session.loggedin){
+        con.query(`SELECT option_vote,num_votes FROM vote_options WHERE voteID = (SELECT voteID FROM votes WHERE title='${vote_title}?')`,function(erro,results,fields){
+            console.log(results)
+            })
+    }
+
+    response.end()
+})
+
+//Votar
+routes.post('/vote-single', function(request,response){
+    var vote_title = request.body.vote_title
+    var option_vote = request.body.option_vote
+
+    con.query(`UPDATE vote_options SET num_votes = num_votes+1 WHERE option_vote='${option_vote}' AND voteID=(SELECT voteID FROM votes WHERE title='${vote_title}?')`, function(error, results, fields) {
+    })
+    
+})
+
 
 
 module.exports = routes
