@@ -9,18 +9,20 @@
       </div>
   
       <div class="row">
-        <div class="col-12 col-md-6 col-lg-4 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Qual a melhor stack?</h5>
-              <small>10/08/20 | 10 votos</small>
-              <p class="card-text">
-                Vote em qual a melhor stack para projetos de médio porte.
-              </p>
-              <a href="vote-single.html" class="btn btn-primary">Visualizar Votação</a>
+        @each(vote in votes)
+          <div class="col-12 col-md-6 col-lg-4 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{vote.title}}</h5>
+                <small>10/08/20 | 10 votos</small>
+                <p class="card-text">
+                  Vote em qual a melhor stack para projetos de médio porte.
+                </p>
+                <a href="vote-single.html" class="btn btn-primary">Visualizar Votação</a>
+              </div>
             </div>
           </div>
-        </div>
+        @endeach
   
         <div class="col-12 col-md-6 col-lg-4 mb-4">
           <div class="card">

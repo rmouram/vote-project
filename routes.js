@@ -3,7 +3,8 @@ const { request, response, query } = require('express')
 const session = require('express-session')
 const bodyParser = require('body-parser')
 const path = require('path')
-
+const userController = require('./controllers/UserController')
+const voteController = require('./controllers/VoteController')
 
 const routes = express.Router()
 routes.use(bodyParser.urlencoded({extended : true}))
@@ -23,26 +24,26 @@ const con = mysql.createConnection({
     host: 'localhost', // O host do banco. Ex: localhost
     user: 'root', // Um usuário do banco. Ex: user 
     password: '', // A senha do usuário. Ex: user123
-    database: 'vote-project' // A base de dados a qual a aplicação irá se conectar, deve ser a mesma onde foi executado o Código 1. Ex: node_mysql
+    database: 'project-vote' // A base de dados a qual a aplicação irá se conectar, deve ser a mesma onde foi executado o Código 1. Ex: node_mysql
 });
 
+function middlewareUserAutenticate(request, response, next){
+    if(request.session.loggedin){
+        const name = request.session.name
+        request.user = { name }
+    }
 
+    next()
+}
 //Rotas ---------------------------------------------------------------------------------------------
 //Home
-routes.get('/', (request, response) => {
-    if (request.session.loggedin){
-        const name = request.session.name
-        return response.render('index', {
-            name: name
-        })
-    } else {
-        return response.render('index', {
-            name: 'Lindinho'
-        })
-    }
-    response.end()
-
-})
+routes.get('/', voteController.index)
+// routes.get('/', middlewareUserAutenticate, (request, response) => {
+//     con.query('SELECT title FROM votes LIMIT 6',function(erro,results,fields){
+//         return response.render('index', {user: request.user, votes: results})
+//     })
+    
+// })
 
 
 //Login
@@ -62,6 +63,8 @@ routes.post('/login', function(request, response) {
                 response.redirect('/');
                 
 			} else {
+                return response.render('login', { noteification: 'Incorrect Username and/or Password!', email })
+
 				response.send('Incorrect Username and/or Password!');
 			}			
 			response.end();
@@ -78,7 +81,7 @@ routes.get('/logout', function(request, response) {
 
 	request.session.loggedin = false
 		
-	response.end();
+	response.redirect('/');
 })
 
 //Cadastro
@@ -89,11 +92,10 @@ routes.post('/cadastro', function(request,response){
     con.query(`INSERT INTO users (name,email, hashed_password) VALUES('${name}','${email}','${password}')`, function(error, results, fields) {
         if(error!='null'){
            if(error.sqlMessage.substring(9,0)=='Duplicate'){
-
+                return response.json({notification: 'já existe', ...request.body})
+                // return response.render('register', { noteification: 'Email já existe' })
            }
         }
-        
-        
     })
     
 })
@@ -111,13 +113,12 @@ routes.get('/index', function(request,response){
 routes.get('/meusvotos', function(request,response){
     if(request.session.loggedin){
         //Titulo das votações
+        let res
         con.query('SELECT title FROM votes WHERE userID=(SELECT id FROM users WHERE name=?)', request.session.name ,function(erro,results,fields){
-                console.log(results)
-                })
-        //Opções das votações
-        con.query('SELECT title FROM votes WHERE userID=(SELECT id FROM users WHERE name=?)', request.session.name ,function(erro,results,fields){
+            res = reslt    
             console.log(results)
-            })
+                })
+        
     }
 
     response.end()
@@ -128,7 +129,7 @@ routes.get('/meusvotos/:votetitle', function(request,response){
     if(request.session.loggedin){
         con.query(`SELECT option_vote FROM vote_options WHERE voteID = (SELECT voteID FROM votes WHERE title='${vote_title}?')`,function(erro,results,fields){
             console.log(results)
-            })
+        })
     }
 
     response.end()
