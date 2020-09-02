@@ -1,12 +1,9 @@
 const express = require('express')
-const { request, response, query } = require('express')
 const session = require('express-session')
 const bodyParser = require('body-parser')
-const path = require('path')
 const userController = require('./controllers/UserController')
 const voteController = require('./controllers/VoteController')
-const crypto = require('crypto')
-
+const sessionController = require('./controllers/SessionController')
 
 
 const routes = express.Router()
@@ -20,17 +17,6 @@ routes.use(session({
 	saveUninitialized: true
 }))
 
-//Conexão com o banco (passar pro bd.js)
-/* const mysql = require('mysql');
-const { get } = require('http')
-const connection = require('./database/connections')
-const con = mysql.createConnection({
-    host: 'localhost', // O host do banco. Ex: localhost
-    user: 'root', // Um usuário do banco. Ex: user 
-    password: '', // A senha do usuário. Ex: user123
-    database: 'project-vote' // A base de dados a qual a aplicação irá se conectar, deve ser a mesma onde foi executado o Código 1. Ex: node_mysql
-});
- */
 function middlewareUserAutenticate(request, response, next){
     if(request.session.loggedin){
         const name = request.session.name
@@ -41,7 +27,10 @@ function middlewareUserAutenticate(request, response, next){
 }
 //Rotas ---------------------------------------------------------------------------------------------
 //Home
-routes.get('/', voteController.index)
+routes.get('/', (request, response) => {
+    
+    return response.render('index')
+})
 
 
 //Login
@@ -50,28 +39,7 @@ routes.get('/login', (request, response) => {
     return response.render('login')
 })
 
-routes.post('/login', function(request, response) {
-	var email = request.body.email
-	var password = request.body.password
-	if (email && password) {
-		con.query('SELECT * FROM users WHERE email = ? AND hashed_password = ?', [email, password], function(error, results, fields) {
-            if (results.length > 0) {
-				request.session.loggedin = true
-                request.session.name = results[0].name
-                response.redirect('/');
-                
-			} else {
-                return response.render('login', { noteification: 'Incorrect Username and/or Password!', email })
-
-				response.send('Incorrect Username and/or Password!');
-			}			
-			response.end();
-		});
-	} else {
-		response.send(`Please enter Username and Password!`);
-		response.end();
-	}
-});
+routes.post('/login', sessionController.create);
 
 
 //Logout
@@ -82,15 +50,16 @@ routes.get('/logout', function(request, response) {
 	response.redirect('/');
 })
 
-//Cadastro
+//Cadastrar usuário
 routes.post('/signup', userController.create)
+
+//lista usuários cadastrados
+routes.get('/users', userController.index)
 
 //alterar usuario (nao funciona)
 routes.put('/users', userController.update)
 
-//Enquetes Públicas - As votações salvas no banco
-routes.get('/users', userController.index)
-
+//lista votações criadas
 routes.get('/votes', voteController.index)
 
 //Meus Votos - Votos criados pelo usuário (apenas listagem dos titulos)
