@@ -5,6 +5,9 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const userController = require('./controllers/UserController')
 const voteController = require('./controllers/VoteController')
+const crypto = require('crypto')
+
+
 
 const routes = express.Router()
 routes.use(bodyParser.urlencoded({extended : true}))
@@ -18,15 +21,16 @@ routes.use(session({
 }))
 
 //Conexão com o banco (passar pro bd.js)
-const mysql = require('mysql');
+/* const mysql = require('mysql');
 const { get } = require('http')
+const connection = require('./database/connections')
 const con = mysql.createConnection({
     host: 'localhost', // O host do banco. Ex: localhost
     user: 'root', // Um usuário do banco. Ex: user 
     password: '', // A senha do usuário. Ex: user123
     database: 'project-vote' // A base de dados a qual a aplicação irá se conectar, deve ser a mesma onde foi executado o Código 1. Ex: node_mysql
 });
-
+ */
 function middlewareUserAutenticate(request, response, next){
     if(request.session.loggedin){
         const name = request.session.name
@@ -38,12 +42,6 @@ function middlewareUserAutenticate(request, response, next){
 //Rotas ---------------------------------------------------------------------------------------------
 //Home
 routes.get('/', voteController.index)
-// routes.get('/', middlewareUserAutenticate, (request, response) => {
-//     con.query('SELECT title FROM votes LIMIT 6',function(erro,results,fields){
-//         return response.render('index', {user: request.user, votes: results})
-//     })
-    
-// })
 
 
 //Login
@@ -85,29 +83,15 @@ routes.get('/logout', function(request, response) {
 })
 
 //Cadastro
-routes.post('/cadastro', function(request,response){
-    var name = request.body.name
-    var email = request.body.email
-    var password = request.body.password
-    con.query(`INSERT INTO users (name,email, hashed_password) VALUES('${name}','${email}','${password}')`, function(error, results, fields) {
-        if(error!='null'){
-           if(error.sqlMessage.substring(9,0)=='Duplicate'){
-                return response.json({notification: 'já existe', ...request.body})
-                // return response.render('register', { noteification: 'Email já existe' })
-           }
-        }
-    })
-    
-})
+routes.post('/signup', userController.create)
+
+//alterar usuario (nao funciona)
+routes.put('/users', userController.update)
 
 //Enquetes Públicas - As votações salvas no banco
-routes.get('/index', function(request,response){
- 
-    con.query('SELECT title FROM votes LIMIT 6',function(erro,results,fields){
-            return results
-            })
-    response.end()
-})
+routes.get('/users', userController.index)
+
+routes.get('/votes', voteController.index)
 
 //Meus Votos - Votos criados pelo usuário (apenas listagem dos titulos)
 routes.get('/meusvotos', function(request,response){
