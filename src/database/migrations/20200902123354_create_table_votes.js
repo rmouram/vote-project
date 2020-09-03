@@ -1,14 +1,18 @@
 exports.up = function(knex) {
     return knex.schema.createTable('votes', function(table) {
-        table.increments('voteId')
+        table.increments()
         table.string('title', 255).notNullable()
-
-        table.integer('userId').notNullable()
-
-        table.foreign('userId').references('users.id').onDelete('CASCADE')
-            
-
-        table.timestamps(true, true)
+        table.integer('vote', 11)
+        table.string('description', 255).notNullable()
+        table
+            .integer('user_id')    
+            .unsigned()
+            .references('id')
+            .inTable('users')
+            .onUpdate('CASCADE')
+            .onDelete('CASCADE')
+        table.integer('status').defaultTo(1)
+        table.timestamps()
     })
   };
   

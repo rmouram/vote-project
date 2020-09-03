@@ -4,7 +4,10 @@ const Vote = require('../models/Vote')
 module.exports = {
   async index(request, response){
     const results = await connection('votes')
-    return response.json(results)
+    return response.render('index', {
+      votes: results,
+      user: request.user
+    })
   },
   async create(request, response){
     

@@ -1,29 +1,34 @@
 @layout('layout')
 @section('main')
      <!-- Content here -->
-     <div class="row mt-4">
+     <div class="row mt-4 header-home">
         <div class="col-12">
-          <h2>Seja bem Vindo, <strong>{{name}}</strong>!</h2>
+          <h2>Seja bem Vindo 
+            @if(user)
+            , <strong>{{user.name}}</strong>
+            @endif  
+          !</h2>
           <p>Neste site você pode se cadastrar, criar sua votação e enviar para seuas amigos!</p>
         </div>
       </div>
   
       <div class="row">
         @each(vote in votes)
-          <div class="col-12 col-md-6 col-lg-4 mb-4">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">{{vote.title}}</h5>
-                <small>10/08/20 | 10 votos</small>
-                <p class="card-text">
-                  Vote em qual a melhor stack para projetos de médio porte.
-                </p>
-                <a href="vote-single.html" class="btn btn-primary">Visualizar Votação</a>
-              </div>
+          
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{vote.title}}</h5>
+              <small>10/08/20 | {{vote.vote}} votos</small>
+              <p class="card-text">
+                {{vote.description}}
+              </p>
+              <a href="vote-single.html" class="btn btn-primary">Visualizar Votação</a>
             </div>
           </div>
+        </div>
         @endeach
-  
+{{--    
         <div class="col-12 col-md-6 col-lg-4 mb-4">
           <div class="card">
             <div class="card-body">
@@ -88,7 +93,7 @@
             </div>
           </div>
         </div>
-  
+    --}}
       </div>
   
       <div class="row">

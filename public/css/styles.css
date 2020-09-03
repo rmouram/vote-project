@@ -8,3 +8,18 @@ body{
   color: #000;
 }
 
+.night .card-title {
+  color: black;
+}
+
+.night .card{
+  /* background: rgb(72, 76, 79); */
+}
+
+.night .card .btn {
+  background: rgb(72, 76, 79);
+}
+
+.night .header-home{
+  color: white !important;
+}

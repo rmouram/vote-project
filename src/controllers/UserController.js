@@ -16,22 +16,28 @@ module.exports = {
     return response.json(results)
   },
   async create(request, response){
-    const { name, email, password } = request.body
+    const { name, email, password, password_confirm } = request.body
+
+    if (password != password_confirm) {
+      //
+      return response.redirect('/cadastro', { notification: 'As senhas não batem' })
+
+    }
 
     await connection('users').insert({
       name,
       email,
       password
     })
-    return response.status(201).send()
+    return response.redirect('/login')
   },
   async update(request, response){
     const { name } = request.body
     const { id } = request.params
 
     await connection('users')
-    .update({name})
     .where({id})
+    .update({name})
 
     return response.send()
 
