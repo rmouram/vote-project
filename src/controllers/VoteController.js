@@ -22,7 +22,6 @@ module.exports = {
         vote: 0
       }, "id")
       vote_id = voteId[0]
-      console.log(vote_id)
   
       await Promise.all(opts.map(async opt => {
         await connection('votes_options').insert({

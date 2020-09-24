@@ -6,6 +6,7 @@ module.exports = {
     const user_id = request.user.id
     const { index=0 } = request.query
     let results
+    console.log(request.user)
     if (request.user.type == 'adm') {
       results = await connection('votes').select()
     }else{
@@ -13,7 +14,6 @@ module.exports = {
     }
     const votes = await Promise.all(results.map(async vote => {
       const opts = await connection('votes_options').select().where({vote_id: vote.id})
-      console.log(opts)
       return {
         ...vote,
         opts: opts
@@ -21,7 +21,6 @@ module.exports = {
     }))
 
     const vote = votes.find((_,i) => i == index)
-    console.log(vote, index)
    return response.render('my-vote', {
     user: request.user,
     votes,

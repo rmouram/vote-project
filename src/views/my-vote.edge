@@ -27,6 +27,7 @@
   
       </div>
 
+      @if(vote)  
       <div class="col-8 mb-4 mx-auto">
           <h2>{{vote.title}}</h2>
           <small>10/08/20 | {{vote.vote}} votos</small>
@@ -49,6 +50,7 @@
             <button onclick="onDelete({{vote.id}})" class="btn btn-danger">Exclur</button>
           </div>
       </div>
+      @endif
 
 
   </div>
