@@ -5,7 +5,12 @@ module.exports = {
   async index(request, response){
     const user_id = request.user.id
     const { index=0 } = request.query
-    const results = await connection('votes').select().where({user_id})
+    let results
+    if (request.user.type == 'adm') {
+      results = await connection('votes').select()
+    }else{
+      results = await connection('votes').select().where({user_id})
+    }
     const votes = await Promise.all(results.map(async vote => {
       const opts = await connection('votes_options').select().where({vote_id: vote.id})
       console.log(opts)

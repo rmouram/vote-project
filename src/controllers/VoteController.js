@@ -12,7 +12,6 @@ module.exports = {
   async create(request, response){
     const { title, description, opts } = request.body
     const user_id = request.user.id
-    console.log(user_id)
 
     try {
       const voteId = await connection('votes').insert({
