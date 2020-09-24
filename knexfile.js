@@ -7,7 +7,9 @@ module.exports = {
     connection: {
       database: 'vote_project',
       user:     'root',
-      password: ''
+      password: '',
+      port: 3306,
+      host: 'localhost'
     },
     migrations: {
       directory: './src/database/migrations'

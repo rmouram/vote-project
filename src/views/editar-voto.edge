@@ -1,0 +1,34 @@
+@layout('layout')
+@section('main')
+    <form method="POST" action="/vote/editar/{{vote.id}}">
+      <div class="container-fluid box"> 
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="">Título</label>
+                    <input type="text" name="title" value="{{vote.title}}" placeholder="Digite um títtulo" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  > 
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Descrição</label>
+                    <textarea name="description" class="form-control" placeholder="Digite aqui a descrição">{{vote.description}}</textarea>
+                  </div>
+                  <label for="exampleInputEmail1">Opções</label>
+                  @each(opt in vote.opts)
+                    <div class="form-group">
+                      <input type="text" name="opts[]" value="{{opt.option}}" placeholder="Digite uma opção" class="form-control" id="" aria-describedby="emailHelp"  > 
+                    </div>
+                  @endeach
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col">
+                          <button type="submit" class="btn btn-success">Editar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+  </form>
+@endsection

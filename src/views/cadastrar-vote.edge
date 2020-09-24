@@ -1,0 +1,38 @@
+@layout('layout')
+@section('main')
+    <form method="POST" action="/vote">
+      <div class="container-fluid box"> 
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="">Título</label>
+                    <input type="text" name="title" placeholder="Digite um títtulo" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  > 
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Descrição</label>
+                    <textarea name="description" class="form-control" placeholder="Digite aqui a descrição"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Opções</label>
+                    <input type="text" name="opts[]" placeholder="Digite uma opção" class="form-control" id="" aria-describedby="emailHelp"  > 
+                  </div>
+                  <div class="form-group">
+                    <input type="text" name="opts[]"placeholder="Digite uma opção"  class="form-control" id="" aria-describedby="emailHelp"  > 
+                  </div>
+                  <div class="form-group">
+                    <input type="text" name="opts[]"placeholder="Digite uma opção"  class="form-control" id="" aria-describedby="emailHelp"  > 
+                  </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col">
+                          <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+  </form>
+@endsection

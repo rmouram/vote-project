@@ -1,0 +1,63 @@
+@layout('layout')
+@section('main')
+
+
+<div class="container">
+  <!-- Content here -->
+  <div class="row mt-4 mb-4">
+    <div class="col-12">
+      <h2><strong>Meus votos</strong></h2>
+      <a href="/criar-votacao" class="btn btn-primary">Cadastrar voto</a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-4 mb-4">
+      @each(voteItem in votes)  
+        <div class="card {{voteItem.id == vote.id ? 'bg-primary text-white ' : ''}}">
+          <div class="card-body">
+            <h5 class="card-title"><a href="/meus-votos?index={{$loop.index}}" class="{{voteItem.id == vote.id ? 'text-white ' : ''}}">{{voteItem.title}}</a></h5>
+            <small>10/08/20 | {{voteItem.vote}} votos</small>
+            <p class="card-text">
+              {{voteItem.description}}
+            </p>
+          </div>
+        </div>
+      @endeach
+  
+      </div>
+
+      <div class="col-8 mb-4 mx-auto">
+          <h2>{{vote.title}}</h2>
+          <small>10/08/20 | {{vote.vote}} votos</small>
+          <p>{{vote.description}}</p>
+          
+          {{--  
+            <div class="alert alert-success" role="alert">
+              Voto contabilizado com sucesso! Obrigado!
+          </div>
+            --}}
+          @each(opt in vote.opts)
+            <div class="mt-3 mb-3">
+              <h4>{{opt.option}}</h4>
+              <h6>{{opt.num_votes}}</h6>
+            </div>
+          @endeach
+
+          <div class="mt-4 mb-4">
+            <a href="/editar-voto/{{vote.id}}" class="btn btn-success">Editar</a>
+            <button onclick="onDelete({{vote.id}})" class="btn btn-danger">Exclur</button>
+          </div>
+      </div>
+
+
+  </div>
+</div>
+<script>
+  function onDelete(id){
+    if (window.confirm("Você deseja excluir esta votação?")) {
+      window.location= window.location.origin+'/vote/delete/'+id
+    }
+  }
+</script>
+@endsection
