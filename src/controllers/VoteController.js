@@ -1,3 +1,4 @@
+const { countDistinct } = require('../database/connections')
 const connection = require('../database/connections')
 const Vote = require('../models/Vote')
 
@@ -60,6 +61,25 @@ module.exports = {
 
   },
   async show(request, response){
+    const {vote_id} = request.body
 
+
+    let results
+    console.log(request.user)
+    
+    results = await connection('votes').select().where({id:vote_id})
+    
+    const votes = await Promise.all(results.map(async vote => {
+      const opts = await connection('votes_options').select().where({vote_id: vote.id})
+      return {
+        ...vote,
+        opts: opts
+      }
+    }))
+
+    return response.render('vote-single', {
+      votes
+     })
+   
   }
 }

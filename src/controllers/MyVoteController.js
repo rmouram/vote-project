@@ -29,14 +29,30 @@ module.exports = {
   },
   async create(request, response){
     
+
+     
   },
   async update(request, response){
+    const {vote_id, id_opt} = request.body
+
+    try{
+      const voteopt = await connection('votes_options').where({id:id_opt}).increment('num_votes',1)
+      if(voteopt){
+        const incrementvote = await connection('votes').where({id:vote_id}).increment('vote',1)
+      }
+    }catch (error) {
+      console.log(error)
+    }
+
+    return response.redirect('/results')
+  
 
   },
   async delete(request, response){
 
   },
   async show(request, response){
+
 
   }
 }

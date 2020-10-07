@@ -3,7 +3,7 @@ exports.up = function(knex) {
         table.increments()
         table.string('name', 255).notNullable()
         table.string('type', 255).notNullable()
-        table.string('email', 255).notNullable().unique()
+        table.string('email', 30).notNullable().unique()
         table.string('password', 255).notNullable()
         table.timestamps()
     })
