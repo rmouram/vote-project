@@ -5,9 +5,11 @@ const Vote = require('../models/Vote')
 module.exports = {
   async index(request, response){
     const results = await connection('votes')
+    const users = await connection('users')
     return response.render('index', {
       votes: results,
-      user: request.user
+      user: request.user,
+      users
     })
   },
   async create(request, response){
@@ -61,13 +63,9 @@ module.exports = {
 
   },
   async show(request, response){
-    const {vote_id} = request.body
+    const {vote_id} = request.params
 
-
-    let results
-    console.log(request.user)
-    
-    results = await connection('votes').select().where({id:vote_id})
+    const results = await connection('votes').select().where('id',vote_id)
     
     const votes = await Promise.all(results.map(async vote => {
       const opts = await connection('votes_options').select().where({vote_id: vote.id})
@@ -78,6 +76,7 @@ module.exports = {
     }))
 
     return response.render('vote-single', {
+      user:request.user,
       votes
      })
    

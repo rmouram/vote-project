@@ -17,16 +17,28 @@ module.exports = {
   },
   async create(request, response){
     const { name, email, password, password_confirm } = request.body
+    console.log(password)
+    console.log(password_confirm)
+    const type = 'usr'
 
     if (password != password_confirm) {
       //
-      return response.redirect('/cadastro', { notification: 'As senhas não batem' })
+      return response.render('cadastro', { notification: 'As senhas não batem' })
+
+    }
+    
+    const results = await connection('users').select('email').where('email', email)
+    
+    if (results) {
+      //
+      return response.render('cadastro', { notification: 'Email ja cadastrado' })
 
     }
 
     await connection('users').insert({
       name,
       email,
+      type,
       password
     })
     return response.redirect('/login')

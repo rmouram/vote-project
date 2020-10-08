@@ -1,12 +1,12 @@
 @layout('layout')
 @section('main')
 <div class="container">
-
+    @each(vote in votes)
     <div class="row mt-4">
       <div class="col-8 mx-auto">
-        <h2>Qual a melhor stack?</h2>
-        <small>10/08/20 | 11 votos</small>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sit amet augue quis odio euismod mattis ut quis dui. Morbi eu purus nec ipsum venenatis tincidunt. Nunc pellentesque lacinia velit ut placerat. Nulla nec quam dui. Sed porta vitae elit eget porta. Maecenas a semper magna. Aenean quis ipsum ultricies, dictum ex vitae, consequat lorem. Donec at nisl at arcu mollis iaculis. Duis in quam congue, mollis nisi in, sodales nisl. Morbi vel facilisis arcu. Sed malesuada lorem vel nisi lobortis, a tincidunt ante feugiat. Suspendisse potenti. Proin sed nisi ante.</p>
+        <h2>{{vote.title}}</h2>
+        <small>10/08/20 | {{vote.vote}} votos</small>
+        <p>{{vote.description}}</p>
         
       </div>
 
@@ -19,45 +19,14 @@
         </div>
 
         <div class="row mt-3 mb-4">
-
+          @each(opt in vote.opts)
           <div class="col-12 mb-3">
-            <h4>Nodejs + ReactJS + React Native</h4>
-            <div class="progress">
-              <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
-            </div>
+            <h4>{{opt.option}}</h4>
+            <h6>{{opt.num_votes}}</h6>
           </div>
-
-          <div class="col-12 mb-3">
-            <h4>Ruby on Rails</h4>
-            <div class="progress">
-              <div class="progress-bar" role="progressbar" style="width: 15%;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">15%</div>
-            </div>
-          </div>
-
-          <div class="col-12 mb-3">
-            <h4>Python Django</h4>
-            <div class="progress">
-              <div class="progress-bar" role="progressbar" style="width: 5%;" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100">5%</div>
-            </div>
-          </div>
-          
+          @endeach        
         </div>
       </div>
-    </div>
-
-    <ul class="nav justify-content-end">
-      <li class="nav-item mr-1">
-        <img src="facebook.png" alt="some  text" width=20 height=20>
-      </li>
-      <li class="nav-item mr-1">
-        <img src="twitter.png" alt="some  text" width=20 height=20>
-      </li>
-      <li class="nav-item mr-1">
-        <img src="rede-social.png" alt="some  text" width=20 height=20>
-      </li>
-      <li class="nav-item mb-1">
-        <button type="button" class="btn btn-secondary btn-sm">Link Compartilhável</button>
-      </li>
-    </ul> 
-  </div> 
+  @endeach
+</div>
 @endsection

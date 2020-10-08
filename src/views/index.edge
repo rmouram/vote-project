@@ -14,16 +14,16 @@
   
       <div class="row">
         @each(vote in votes)
-          
         <div class="col-12 col-md-6 col-lg-4 mb-4">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">{{vote.title}}</h5>
+              <small class="card-user">Criado por:{{usr.name}}</small>
               <small>10/08/20 | {{vote.vote}} votos</small>
               <p class="card-text">
                 {{vote.description}}
               </p>
-              <a href="vote-single.html" class="btn btn-primary">Visualizar Votação</a>
+              <a href="/single-vote/{{vote.id}}" class="btn btn-primary">Visualizar Votação</a>
             </div>
           </div>
         </div>

@@ -51,8 +51,8 @@ routes.get('/cadastro', (request, response) => {
 })
 routes.post('/cadastro', userController.create)
 
-routes.get('/single-vote', voteController.show)
-routes.post('/votar', myVoteController.update)
+routes.get('/single-vote/:vote_id', voteController.show)
+routes.post('/votar/:vote_id', myVoteController.update)
 //routes.get('/result', myVoteController.show)
 
 module.exports = routes

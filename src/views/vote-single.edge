@@ -4,50 +4,31 @@
 <div class="container">
     <!-- Content here -->
 
+    @each(vote in votes)
     <div class="row mt-4 mb-4">
       <div class="col-8 mx-auto">
-        <h2>Qual a melhor stack?</h2>
-        <small>10/08/20 | 10 votos</small>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sit amet augue quis odio euismod mattis ut quis dui. Morbi eu purus nec ipsum venenatis tincidunt. Nunc pellentesque lacinia velit ut placerat. Nulla nec quam dui. Sed porta vitae elit eget porta. Maecenas a semper magna. Aenean quis ipsum ultricies, dictum ex vitae, consequat lorem. Donec at nisl at arcu mollis iaculis. Duis in quam congue, mollis nisi in, sodales nisl. Morbi vel facilisis arcu. Sed malesuada lorem vel nisi lobortis, a tincidunt ante feugiat. Suspendisse potenti. Proin sed nisi ante.</p>
+        <h2>{{vote.title}}</h2>
+        <small>10/08/20 | {{vote.vote}} votos</small>
+        <p>{{vote.description}}</p>
         
+        <form action="/votar/{{vote.id}}" method="POST">
         <div class="vote-options mt-4">
-          <a href="result.html" class="p-3 mb-3">
-            <div class="vote-item">
-              <h4 class="text-center">Nodejs + ReactJS + React Native</h4>
+          @each(opt in vote.opts)
+            <div class="mt-3 mb-3">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="id_opt" id="exampleRadios1" value={{opt.id}}>
+                <label class="form-check-label" for="exampleRadios1">
+                  {{opt.option}}
+                </label>
+              </div>
             </div>
-          </a>
-
-          <a href="result.html" class="p-3 mb-3">
-            <div class="vote-item">
-              <h4 class="text-center">Ruby on Rails</h4>
-            </div>
-          </a>
-
-          <a href="result.html" class="p-3 mb-3">
-            <div class="vote-item">
-              <h4 class="text-center">Python Django</h4>
-            </div>
-          </a>
-
+          @endeach
         </div>
+        <button type="submit" class="btn btn-primary">Votar</button>
+        </form>
       </div>
-
+      
     </div>
-
-    <ul class="nav justify-content-end">
-      <li class="nav-item mr-1">
-        <img src="facebook.png" alt="some  text" width=20 height=20>
-      </li>
-      <li class="nav-item mr-1">
-        <img src="twitter.png" alt="some  text" width=20 height=20>
-      </li>
-      <li class="nav-item mr-1">
-        <img src="rede-social.png" alt="some  text" width=20 height=20>
-      </li>
-      <li class="nav-item mb-1">
-        <button type="button" class="btn btn-secondary btn-sm">Link Compartilhável</button>
-      </li>
-    </ul>
-
-  </div> 
+    @endeach
+</div> 
   @endsection

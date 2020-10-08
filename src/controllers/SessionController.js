@@ -4,9 +4,8 @@ const { index } = require("./UserController")
 module.exports = {
   
     async create(request, response){
-        request.session.loggedin = true
-        request.session.name = 'luis'
-        request.session.user = {name:'luis', id:"1", type: 'adm'}
+        //email='romulo@gmail.com'
+        //password='123'
         const { email, password } = request.body
         if (email && password) {
             const user = await connection("users")

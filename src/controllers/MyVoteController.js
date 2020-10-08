@@ -33,18 +33,35 @@ module.exports = {
      
   },
   async update(request, response){
-    const {vote_id, id_opt} = request.body
+    const {vote_id} = request.params
+    const {id_opt} = request.body
+
+    console.log(vote_id)
+    console.log(id_opt)
 
     try{
-      const voteopt = await connection('votes_options').where({id:id_opt}).increment('num_votes',1)
+      const voteopt = await connection('votes_options').where("id",id_opt).increment('num_votes',1)
       if(voteopt){
-        const incrementvote = await connection('votes').where({id:vote_id}).increment('vote',1)
+        const incrementvote = await connection('votes').where("id",vote_id).increment('vote',1)
       }
     }catch (error) {
       console.log(error)
     }
 
-    return response.redirect('/results')
+    const results = await connection('votes').select().where('id',vote_id)
+    
+    const votes = await Promise.all(results.map(async vote => {
+      const opts = await connection('votes_options').select().where({vote_id: vote.id})
+      return {
+        ...vote,
+        opts: opts
+      }
+    }))
+
+    return response.render('result', {
+      user:request.user,
+      votes
+    })
   
 
   },
