@@ -21,6 +21,10 @@ module.exports = {
     console.log(password_confirm)
     const type = 'usr'
 
+    if (!name || !password || !email || !password_confirm) {
+      return response.render('cadastro', { notification: 'Algum campos estão vazios' })
+    }
+
     if (password != password_confirm) {
       //
       return response.render('cadastro', { notification: 'As senhas não batem' })

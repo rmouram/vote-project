@@ -41,7 +41,11 @@
           @each(opt in vote.opts)
             <div class="mt-3 mb-3">
               <h4>{{opt.option}}</h4>
-              <h6>{{opt.num_votes}}</h6>
+              <h6 class="">
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" style="width: {{opt.percent}}%;" aria-valuenow="{{opt.percent}}" aria-valuemin="0" aria-valuemax="100">{{opt.percent}}%</div>
+                </div>
+              </h6>
             </div>
           @endeach
 

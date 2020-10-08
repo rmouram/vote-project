@@ -74,10 +74,11 @@ module.exports = {
         opts: opts
       }
     }))
-
     return response.render('vote-single', {
       user:request.user,
-      votes
+      votes,
+      error: request.session.error,
+      statusCode: 401
      })
    
   }

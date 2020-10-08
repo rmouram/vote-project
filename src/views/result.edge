@@ -5,7 +5,7 @@
     <div class="row mt-4">
       <div class="col-8 mx-auto">
         <h2>{{vote.title}}</h2>
-        <small>10/08/20 | {{vote.vote}} votos</small>
+        <small>10/08/20 | <span id="total-vote">{{vote.vote}}</span> votos</small>
         <p>{{vote.description}}</p>
         
       </div>
@@ -22,7 +22,11 @@
           @each(opt in vote.opts)
           <div class="col-12 mb-3">
             <h4>{{opt.option}}</h4>
-            <h6>{{opt.num_votes}}</h6>
+          <h6 class="">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: {{opt.percent}}%;" aria-valuenow="{{opt.percent}}" aria-valuemin="0" aria-valuemax="100">{{opt.percent}}%</div>
+            </div>
+          </h6>
           </div>
           @endeach        
         </div>

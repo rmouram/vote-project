@@ -20,6 +20,8 @@ module.exports = {
             request.session.loggedin = true
             request.session.name = user.name
             request.session.user = user
+            request.session.error = ''
+            request.statusCode = 200
             response.redirect('/');
         }
         else {

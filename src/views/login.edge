@@ -5,6 +5,11 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
+                  @if(notification !== '')
+                    <div class="alert alert-danger" role="alert">
+                    {{notification}}
+                    </div>
+                  @endif
                   <div class="form-group">
                     <label for="exampleInputEmail1">E-mail</label>
                     <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  > 

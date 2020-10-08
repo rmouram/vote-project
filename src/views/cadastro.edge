@@ -6,6 +6,11 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content"> 
             <div class="modal-body">
+                @if(notification !== '')
+                    <div class="alert alert-danger" role="alert">
+                    {{notification}}
+                    </div>
+                @endif
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label>Nome</label> 

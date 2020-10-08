@@ -13,6 +13,12 @@
         
         <form action="/votar/{{vote.id}}" method="POST">
         <div class="vote-options mt-4">
+          @if(error !== '')
+          <div class="alert alert-danger" role="alert">
+           {{error}}
+          </div>
+          @endif
+
           @each(opt in vote.opts)
             <div class="mt-3 mb-3">
               <div class="form-check">
